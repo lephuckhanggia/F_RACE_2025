@@ -1,12 +1,12 @@
 int currentMode = 0;
 
 //Speed
-int SpeedMax = 70;   //90  //70 
-int SpeedMin_1 = 40;    //50  //40
-int SpeedMin_2 = 20;    //30  //20
-int SpeedMin_3 = 10;    //15  //10
-int SpeedMin_4 = 0;   //5;  //0
-int SpeedLech = 0; 
+int SpeedMax = 80;   //100   //90  //70 
+int SpeedMin_1 = 45;   //70    //50  //40
+int SpeedMin_2 = 15;   //40    //30  //20
+int SpeedMin_3 = 5;   //25    //15  //10
+int SpeedMin_4 = 0;   //10   //5     //0
+int SpeedLech = 0;  //0      //0      //0
 
 //A-Trai B-Phai
 int SpeedA = SpeedMax  ;
@@ -21,7 +21,7 @@ int SpeedMinA_4 = SpeedMin_4 ;
 int SpeedMinB_4 = SpeedMin_4+ SpeedLech;
 
 //Others
-int Full_Black_Reset_Time = 200;    //150-200
+int Full_Black_Reset_Time = 250;    //150-200
 int Turn_check = 0;
 int Turning = 0;
 int Time = 0;

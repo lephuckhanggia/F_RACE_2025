@@ -28,21 +28,21 @@ void Read_Run_Button_Value()
 //    }
 // 
 //}
-//void Print_Sensor_Value() 
-//{
+void Print_Sensor_Value() 
+{
 //  Serial.print(SensorPattern, BIN);
-////  Serial.print(V_STL);
-////  Serial.print(V_S1);
-////  Serial.print(V_S2);  
-////  Serial.print(V_S3);
-////  Serial.print(V_S4);
-////  Serial.print(V_S5);
-////  Serial.print(V_STR);
-//  Serial.print("    But1: ");
-//  Serial.print(V_But1);
-//  Serial.print(" But2: ");
-//  Serial.print(V_But2);
-//  Serial.print(" CurrentMode: ");
-//  Serial.println(currentMode);
-////  delay(50);
-//}
+//  Serial.print(V_STL);
+//  Serial.print(V_S1);
+//  Serial.print(V_S2);  
+//  Serial.print(V_S3);
+//  Serial.print(V_S4);
+//  Serial.print(V_S5);
+//  Serial.print(V_STR);
+  Serial.print("    But1: ");
+  Serial.print(V_But1);
+  Serial.print(" But2: ");
+  Serial.print(V_But2);
+  Serial.print(" CurrentMode: ");
+  Serial.println(currentMode);
+//  delay(50);
+}

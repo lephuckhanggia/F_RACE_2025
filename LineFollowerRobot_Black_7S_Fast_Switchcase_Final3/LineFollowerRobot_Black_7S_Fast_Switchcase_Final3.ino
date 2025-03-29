@@ -5,7 +5,7 @@ void setup() {
     Variable_Status();
 }
 void loop() {
-    Read_Run_Button_Value();  
+    Read_Run_Button_Value(); 
     switch (currentMode) {
         case 1:
             if (Start == 0) {  // Only check distance if robot hasn't started
@@ -85,7 +85,6 @@ void Black_Line_Following() {
         case 0b0111111:   //Prepare to turn Right
         case 0b0011111:   
         case 0b0001111:
-//        case 0b0000111:
         case 0b0011101:   //Sperated line turn Right
         case 0b0110011:
         case 0b0100111:
@@ -101,7 +100,6 @@ void Black_Line_Following() {
         case 0b1111110:    //Prepare to turn Left         
         case 0b1111100:
         case 0b1111000:
-//        case 0b1110000:
         case 0b1011100:   //Seperated line turn Left
         case 0b1001100:
         case 0b1011000:
@@ -126,12 +124,17 @@ void Black_Line_Following() {
             }
             PatternMatched = true;
             break;
-        case 0b1111111:   //Full_Black_Reset_Turning_Conditions
+        case 0b1111111:   //Full_Black_Reset_Turning_Conditions                
                 inFullBlack = true;  // Set flag when in full black
                 blackExitTime = millis();  // Start the timer
                 PatternMatched = true;
+                Run_Straight();
                 break;
         case 0b0111110:   //Straight
+            Turn_check = 0;
+            Run_Straight();
+            WhiteTurnRight = 0;
+            WhiteTurnLeft = 0;
         case 0b0011100:
         case 0b1100011:   //Brige Straight
             Turn_check = 1;
