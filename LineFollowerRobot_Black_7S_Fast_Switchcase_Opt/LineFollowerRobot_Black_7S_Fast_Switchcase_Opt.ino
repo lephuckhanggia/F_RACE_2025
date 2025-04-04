@@ -130,6 +130,7 @@ void Black_Line_Following() {
                 inFullBlack = true;  // Set flag when in full black
                 blackExitTime = millis();  // Start the timer
                 PatternMatched = true;
+                Run_Straight();
                 break;
         case 0b0111110:   //Straight
         case 0b0011100:

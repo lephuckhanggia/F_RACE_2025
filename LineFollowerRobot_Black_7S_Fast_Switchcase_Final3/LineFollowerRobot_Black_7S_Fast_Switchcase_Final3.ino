@@ -67,18 +67,18 @@ void loop() {
 
 
 void Black_Line_Following() {
-    if (WhiteTurnRight == 1) {
-        PORTB |= (1 << PB5);   // Turn ON LED2 (RED, Digital Pin 13)
-        PORTC &= ~(1 << PC4);  // Turn OFF LED1 (GREEN, A4)
-    } 
-    else if (WhiteTurnLeft == 1) {
-        PORTC |= (1 << PC4);   // Turn ON LED1 (GREEN, A4)
-        PORTB &= ~(1 << PB5);  // Turn OFF LED2 (RED, 13)
-    } 
-    else {
-        PORTB &= ~(1 << PB5);  // Turn OFF LED2 (RED, 13)
-        PORTC &= ~(1 << PC4);  // Turn OFF LED1 (GREEN, A4)
-    }
+//    if (WhiteTurnRight == 1) {
+//        PORTB |= (1 << PB5);   // Turn ON LED2 (RED, Digital Pin 13)
+//        PORTC &= ~(1 << PC4);  // Turn OFF LED1 (GREEN, A4)
+//    } 
+//    else if (WhiteTurnLeft == 1) {
+//        PORTC |= (1 << PC4);   // Turn ON LED1 (GREEN, A4)
+//        PORTB &= ~(1 << PB5);  // Turn OFF LED2 (RED, 13)
+//    } 
+//    else {
+//        PORTB &= ~(1 << PB5);  // Turn OFF LED2 (RED, 13)
+//        PORTC &= ~(1 << PC4);  // Turn OFF LED1 (GREEN, A4)
+//    }
     PatternMatched = false;
     SensorPattern7 = (V_STL << 6) | (V_S1 << 5) | (V_S2 << 4) | (V_S3 << 3) | (V_S4 << 2) | (V_S5 << 1) | V_STR;
     switch (SensorPattern7) {

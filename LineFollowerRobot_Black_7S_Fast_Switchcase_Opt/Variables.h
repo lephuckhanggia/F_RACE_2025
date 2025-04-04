@@ -1,11 +1,11 @@
 int currentMode = 0;
 
 //Speed
-int SpeedMax = 70;   //90  //70 
-int SpeedMin_1 = 40;    //50  //40
-int SpeedMin_2 = 20;    //30  //20
-int SpeedMin_3 = 10;    //15  //10
-int SpeedMin_4 = 0;   //5;  //0
+int SpeedMax = 140;   //90  //70 
+int SpeedMin_1 = 100;    //50  //40
+int SpeedMin_2 = 70;    //30  //20
+int SpeedMin_3 = 30;    //15  //10
+int SpeedMin_4 = 5;   //5;  //0
 int SpeedLech = 0; 
 
 //A-Trai B-Phai
@@ -33,8 +33,6 @@ uint8_t SensorPattern7 = 255;
 bool PatternMatched = false;
 unsigned long blackExitTime = 0;
 bool inFullBlack = false;
-//unsigned long turnStartTime = 0;
-//bool turning = false;
 
 //Sensors
 #define STL 2//A0
@@ -48,12 +46,25 @@ bool inFullBlack = false;
 int V_STL ,V_S1, V_S2, V_S3, V_S4, V_S5, V_STR;
 
 //L298n driver
-#define EnA 11// 6
-#define In1 A0//5
-#define In2 A1//7
-#define In3 9//2
-#define In4 12//4
-#define EnB 10//3
+#define EnA 11  // D11 → OC2A → Timer2
+#define In1 A0  // PC0
+#define In2 A1  // PC1
+#define In3 9   // PB1
+#define In4 12  // PB4
+#define EnB 10  // D10 → OC1B → Timer1
+
+// Bit Macros for Motor Direction
+#define IN1_HIGH PORTC |= (1 << PC0)
+#define IN1_LOW  PORTC &= ~(1 << PC0)
+
+#define IN2_HIGH PORTC |= (1 << PC1)
+#define IN2_LOW  PORTC &= ~(1 << PC1)
+
+#define IN3_HIGH PORTB |= (1 << PB1)
+#define IN3_LOW  PORTB &= ~(1 << PB1)
+
+#define IN4_HIGH PORTB |= (1 << PB4)
+#define IN4_LOW  PORTB &= ~(1 << PB4)
 
 //Stage_button
 #define But1 0
@@ -78,13 +89,6 @@ void Variable_Status() {
 
   pinMode(But1, INPUT_PULLUP);
   pinMode(But2, INPUT_PULLUP);
-  
-  pinMode(EnA, OUTPUT);
-  pinMode(In1, OUTPUT);
-  pinMode(In2, OUTPUT);
-  pinMode(In3, OUTPUT);
-  pinMode(In4, OUTPUT);
-  pinMode(EnB, OUTPUT);
 
   pinMode(Led1, OUTPUT);
   pinMode(Led2, OUTPUT);
@@ -92,4 +96,21 @@ void Variable_Status() {
   Serial.begin(9600);
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT);
+  
+  // Set motor direction pins as output
+  DDRC |= (1 << PC0) | (1 << PC1);      // In1, In2 (A0, A1)
+  DDRB |= (1 << PB1) | (1 << PB4);      // In3, In4 (D9, D12)
+
+  pinMode(EnA, OUTPUT);
+  pinMode(EnB, OUTPUT);
+
+  // Timer2 for EnA (D11)
+  TCCR2A = _BV(COM2A1) | _BV(WGM21) | _BV(WGM20); // Fast PWM, non-inverting
+  TCCR2B = _BV(CS22); // Prescaler 64 → ~976 Hz
+  OCR2A = 0;
+
+  // Timer1 for EnB (D10)
+  TCCR1A = _BV(COM1B1) | _BV(WGM10); // Fast PWM 8-bit, non-inverting
+  TCCR1B = _BV(WGM12) | _BV(CS11) | _BV(CS10); // Prescaler 64
+  OCR1B = 0;
 }

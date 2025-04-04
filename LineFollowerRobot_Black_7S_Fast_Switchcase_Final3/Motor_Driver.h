@@ -31,8 +31,8 @@ void TwoWD_Turn_Left()
   digitalWrite(In2, HIGH);
   digitalWrite(In3, HIGH);
   digitalWrite(In4, LOW);
-  analogWrite(EnA, 100 );
-  analogWrite(EnB, 80  );
+  analogWrite(EnA, 105 );
+  analogWrite(EnB, 85  );
 }
 void Slight_Left_1()
 {
@@ -86,8 +86,8 @@ void TwoWD_Turn_Right()
   digitalWrite(In2, LOW);
   digitalWrite(In3, LOW);
   digitalWrite(In4, HIGH);
-  analogWrite(EnA, 75 );
-  analogWrite(EnB, 95 );
+  analogWrite(EnA, 80 );
+  analogWrite(EnB, 100 );
 }
 void Slight_Right_1()
 {
