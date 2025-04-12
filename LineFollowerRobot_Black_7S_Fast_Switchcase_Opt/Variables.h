@@ -1,24 +1,40 @@
+int RunAndSpeedMode = 0;
 int currentMode = 0;
+//Speed Fast
+int F_SpeedMax = 100;   //90  //70 
+int F_SpeedMin_1 = 50;    //50  //40
+int F_SpeedMin_2 = 25;    //30  //20
+int F_SpeedMin_3 = 10;    //15  //10
+int F_SpeedMin_4 = 0;   //5;  //0
+int F_SpeedLech = 20; 
 
-//Speed
-int SpeedMax = 140;   //90  //70 
-int SpeedMin_1 = 100;    //50  //40
-int SpeedMin_2 = 70;    //30  //20
-int SpeedMin_3 = 30;    //15  //10
-int SpeedMin_4 = 5;   //5;  //0
-int SpeedLech = 0; 
+//Speed Slow
+int S_SpeedMax = 80;   //90  //70 
+int S_SpeedMin_1 = 40;    //50  //40
+int S_SpeedMin_2 = 20;    //30  //20
+int S_SpeedMin_3 = 10;    //15  //10
+int S_SpeedMin_4 = 0;   //5;  //0
+int S_SpeedLech = 20; 
 
-//A-Trai B-Phai
-int SpeedA = SpeedMax  ;
-int SpeedB = SpeedMax+ SpeedLech ;
-int SpeedMinA_1 = SpeedMin_1;
-int SpeedMinB_1 = SpeedMin_1+ SpeedLech ;
-int SpeedMinA_2 = SpeedMin_2 ;
-int SpeedMinB_2 = SpeedMin_2+ SpeedLech;
-int SpeedMinA_3 = SpeedMin_3 ;
-int SpeedMinB_3 = SpeedMin_3+ SpeedLech;
-int SpeedMinA_4 = SpeedMin_4 ;
-int SpeedMinB_4 = SpeedMin_4+ SpeedLech;
+//Speed Mode
+int SpeedMax;
+int SpeedMin_1;
+int SpeedMin_2;
+int SpeedMin_3;
+int SpeedMin_4;
+int SpeedLech;
+
+//A-Phai B-Trai
+int SpeedA;
+int SpeedB;
+int SpeedMinA_1; 
+int SpeedMinB_1; 
+int SpeedMinA_2;
+int SpeedMinB_2;
+int SpeedMinA_3; 
+int SpeedMinB_3; 
+int SpeedMinA_4; 
+int SpeedMinB_4; 
 
 //Others
 int Full_Black_Reset_Time = 200;    //150-200
@@ -68,12 +84,15 @@ int V_STL ,V_S1, V_S2, V_S3, V_S4, V_S5, V_STR;
 
 //Stage_button
 #define But1 0
-#define But2 A3
-bool V_But1, V_But2;
+#define But2 A7
+#define But3 A6
+int V_But2, V_But3;
+bool V_But1;
 
 //Led_stage_button
-#define Led1 A4 // GREEN
-#define Led2 13// RED
+#define LedG A4 // GREEN
+#define LedY A3// Yellow
+#define LedR 13
 
 #define trigPin A5   // Chân trig nối với D8
 #define echoPin A2   // Chân echo nối với D9
@@ -88,10 +107,10 @@ void Variable_Status() {
   pinMode(STR, INPUT);
 
   pinMode(But1, INPUT_PULLUP);
-  pinMode(But2, INPUT_PULLUP);
 
-  pinMode(Led1, OUTPUT);
-  pinMode(Led2, OUTPUT);
+  pinMode(LedG, OUTPUT);
+  pinMode(LedY, OUTPUT);
+  pinMode(LedR, OUTPUT);
 
   Serial.begin(9600);
   pinMode(trigPin, OUTPUT);

@@ -5,87 +5,110 @@ void setup() {
     Variable_Status();
 }
 void loop() {
-    Read_Run_Button_Value();  
-    switch (currentMode) {
+    Read_Run_Button_Value(); 
+    switch(RunAndSpeedMode){
         case 1:
-            if (Start == 0) {  // Only check distance if robot hasn't started
-                digitalWrite(trigPin, LOW);
-                delayMicroseconds(2);
-                digitalWrite(trigPin, HIGH);
-                delayMicroseconds(10);
-                digitalWrite(trigPin, LOW);
-                long duration = pulseIn(echoPin, HIGH);
-                if (duration == 0) {
-//                    Serial.println("Không có phản hồi! Kiểm tra cảm biến.");
-                    digitalWrite(Led2, HIGH);
-                    delay(50);
-                    digitalWrite(Led2, LOW);
-                    delay(50);
-                } 
-                else {
-                    long distance = duration * 0.034 / 2;
-//                    Serial.print("Khoảng cách đo được: ");
-//                    Serial.print(distance);
-//                    Serial.println(" cm");
-
-                    if (distance < 20) {  
-                        Stop();
-                        Start = 0;
-                        digitalWrite(Led1, LOW);
-                        digitalWrite(Led2, HIGH);
-                        delay(50);
-                        digitalWrite(Led2, LOW);
-                        delay(50);
-                    } else {  
-                        Start = 1;
-                    }
-                }
-            } 
-            
-            if (Start == 1) {
-                Read_Sensor_Value();
-                Black_Line_Following(); 
-                Full_Black_Turn_Reset();
-//                digitalWrite(Led1, HIGH);
-//                digitalWrite(Led2, LOW);
-            }
-            break;
-            
+          switch (currentMode) {
+              case 1:
+                  if (Start == 0) {  // Only check distance if robot hasn't started
+                      digitalWrite(trigPin, LOW);
+                      delayMicroseconds(2);
+                      digitalWrite(trigPin, HIGH);
+                      delayMicroseconds(10);
+                      digitalWrite(trigPin, LOW);
+                      long duration = pulseIn(echoPin, HIGH);
+                      if (duration == 0) {
+      //                    Serial.println("Không có phản hồi! Kiểm tra cảm biến.");
+                          digitalWrite(LedR, HIGH);
+                          delay(50);
+                          digitalWrite(LedR, LOW);
+                          delay(50);
+                      } 
+                      else {
+                          long distance = duration * 0.034 / 2;
+      //                    Serial.print("Khoảng cách đo được: ");
+      //                    Serial.print(distance);
+      //                    Serial.println(" cm");
+      
+                          if (distance < 20) {  
+                              Stop();
+                              Start = 0;
+                              digitalWrite(LedG, LOW);
+                              digitalWrite(LedR, HIGH);
+                              delay(50);
+                              digitalWrite(LedR, LOW);
+                              delay(50);
+                          } else {  
+                              Start = 1;
+                          }
+                      }
+                  } 
+                  
+                  if (Start == 1) {
+                      Read_Sensor_Value();
+                      Black_Line_Following(); 
+                      Full_Black_Turn_Reset();
+                  }
+                  break;
+                  
+              case 2:
+                  Stop();
+                  Start = 0;
+                  Turn_check = 0;
+                  Turning = 0;
+                  WhiteTurnRight = 0;     
+                  WhiteTurnLeft = 0;
+                  break;
+              default:
+                  // No active mode
+                  break; 
+          }
+          break; 
         case 2:
-            Stop();
-            Start = 0;
-            Turn_check = 0;
-            Turning = 0;
-            WhiteTurnRight = 0;     
-            WhiteTurnLeft = 0;
-            break;
-        default:
-            // No active mode
-            break;
+          switch(currentMode){
+              case 1:
+                 SpeedMax = F_SpeedMax;
+                 SpeedMin_1 = F_SpeedMin_1;
+                 SpeedMin_2 = F_SpeedMin_2;
+                 SpeedMin_3 = F_SpeedMin_3;
+                 SpeedMin_4 = F_SpeedMin_4;
+                 SpeedLech = F_SpeedLech;
+                 Update_Motor_Speed();
+                 break;
+              case 2:
+                 SpeedMax = S_SpeedMax;
+                 SpeedMin_1 = S_SpeedMin_1;
+                 SpeedMin_2 = S_SpeedMin_2;
+                 SpeedMin_3 = S_SpeedMin_3;
+                 SpeedMin_4 = S_SpeedMin_4;
+                 SpeedLech = S_SpeedLech;
+                 Update_Motor_Speed();
+                 break;
+          }
+        break;
     }
 }
 
 
 void Black_Line_Following() {
-    if (WhiteTurnRight == 1) {
-        PORTB |= (1 << PB5);   // Turn ON LED2 (RED, Digital Pin 13)
-        PORTC &= ~(1 << PC4);  // Turn OFF LED1 (GREEN, A4)
-    } 
-    else if (WhiteTurnLeft == 1) {
-        PORTC |= (1 << PC4);   // Turn ON LED1 (GREEN, A4)
-        PORTB &= ~(1 << PB5);  // Turn OFF LED2 (RED, 13)
-    } 
-    else {
-        PORTB &= ~(1 << PB5);  // Turn OFF LED2 (RED, 13)
-        PORTC &= ~(1 << PC4);  // Turn OFF LED1 (GREEN, A4)
-    }
+//    if (WhiteTurnRight == 1) {
+//        PORTC |= (1 << PC4);   // Turn ON LedG (GREEN, A4)
+//        PORTB &= ~(1 << PB5);  // Turn OFF LedY (RED, 13)
+//    } 
+//    else if (WhiteTurnLeft == 1) {
+//        PORTB |= (1 << PB5);   // Turn ON LedY (RED, Digital Pin 13)
+//        PORTC &= ~(1 << PC4);  // Turn OFF LedG (GREEN, A4)
+//    } 
+//    else {
+//        PORTB &= ~(1 << PB5);  // Turn OFF LedY (RED, 13)
+//        PORTC &= ~(1 << PC4);  // Turn OFF LedG (GREEN, A4)
+//    }
     PatternMatched = false;
     SensorPattern7 = (V_STL << 6) | (V_S1 << 5) | (V_S2 << 4) | (V_S3 << 3) | (V_S4 << 2) | (V_S5 << 1) | V_STR;
     switch (SensorPattern7) {
         case 0b0111111:   //Prepare to turn Right
         case 0b0011111:   
         case 0b0001111:
-//        case 0b0000111:
         case 0b0011101:   //Sperated line turn Right
         case 0b0110011:
         case 0b0100111:
@@ -101,7 +124,6 @@ void Black_Line_Following() {
         case 0b1111110:    //Prepare to turn Left         
         case 0b1111100:
         case 0b1111000:
-//        case 0b1110000:
         case 0b1011100:   //Seperated line turn Left
         case 0b1001100:
         case 0b1011000:
@@ -126,13 +148,17 @@ void Black_Line_Following() {
             }
             PatternMatched = true;
             break;
-        case 0b1111111:   //Full_Black_Reset_Turning_Conditions
+        case 0b1111111:   //Full_Black_Reset_Turning_Conditions                
                 inFullBlack = true;  // Set flag when in full black
                 blackExitTime = millis();  // Start the timer
                 PatternMatched = true;
                 Run_Straight();
                 break;
         case 0b0111110:   //Straight
+            Turn_check = 0;
+            Run_Straight();
+            WhiteTurnRight = 0;
+            WhiteTurnLeft = 0;
         case 0b0011100:
         case 0b1100011:   //Brige Straight
             Turn_check = 1;
@@ -286,4 +312,16 @@ void Full_Black_Turn_Reset(){
     Turning = 0;
     inFullBlack = false;  // Reset flag
   }
+}
+void Update_Motor_Speed() {
+    SpeedA = SpeedMax;
+    SpeedB = SpeedMax + SpeedLech;
+    SpeedMinA_1 = SpeedMin_1;
+    SpeedMinB_1 = SpeedMin_1 + SpeedLech;
+    SpeedMinA_2 = SpeedMin_2;
+    SpeedMinB_2 = SpeedMin_2 + SpeedLech;
+    SpeedMinA_3 = SpeedMin_3;
+    SpeedMinB_3 = SpeedMin_3 + SpeedLech;
+    SpeedMinA_4 = SpeedMin_4;
+    SpeedMinB_4 = SpeedMin_4 + SpeedLech;
 }

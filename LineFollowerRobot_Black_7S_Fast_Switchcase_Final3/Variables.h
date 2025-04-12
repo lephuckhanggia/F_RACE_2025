@@ -1,10 +1,10 @@
 int currentMode = 0;
 
 //Speed
-int SpeedMax = 87;   //100   //90  //70 
-int SpeedMin_1 = 40;   //70    //50  //40
-int SpeedMin_2 = 20;   //40    //30  //20
-int SpeedMin_3 = 5;   //25    //15  //10
+int SpeedMax = 100;   //100   //90  //70 
+int SpeedMin_1 = 70;   //70    //50  //40
+int SpeedMin_2 = 30;   //40    //30  //20
+int SpeedMin_3 = 15;   //25    //15  //10
 int SpeedMin_4 = 0;   //10   //5     //0
 int SpeedLech = 0;  //0      //0      //0
 
@@ -56,12 +56,12 @@ int V_STL ,V_S1, V_S2, V_S3, V_S4, V_S5, V_STR;
 #define EnB 10//3
 
 //Stage_button
-#define But1 0
+#define But1 A4
 #define But2 A3
 bool V_But1, V_But2;
 
 //Led_stage_button
-#define Led1 A4 // GREEN
+#define Led1 0 // GREEN
 #define Led2 13// RED
 
 #define trigPin A5   // Chân trig nối với D8

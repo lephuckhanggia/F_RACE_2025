@@ -10,38 +10,53 @@ void Read_Sensor_Value() {
 }
 void Read_Run_Button_Value() 
 {
- V_But1 = digitalRead(But1);
- V_But2 = digitalRead(But2);
- if (V_But1 == LOW) {
-        currentMode = 1;
-    }
- if (V_But2 == LOW) {
-        currentMode = 2;
-        digitalWrite(Led1, LOW);
-        digitalWrite(Led2, HIGH);
-    }
-}
+  V_But1 = digitalRead(But1);
+  V_But2 = analogRead(But2);
+  V_But3 = analogRead(But3);
+  if (V_But1 == LOW) {
+    PORTC |= (1 << PC4);
+    PORTC &= ~(1 << PC3);
+    PORTB &= ~(1 << PB5);
+    currentMode = 1;
+  }
+  if (V_But3 < 100){
+    PORTC &= ~(1 << PC4);
+    PORTC &= ~(1 << PC3);
+    PORTB |= (1 << PB5);
+    currentMode = 2;
+  }
+  if (V_But2 > 900){
+    PORTC |= (1 << PC3);
+    RunAndSpeedMode = 1;
+  }
 
-//void printBinary(int num, int bits = 7) {
-//    for (int i = bits - 1; i >= 0; i--) {
-//        SensorValue = bitRead(num, i);
-//    }
-// 
-//}
-void Print_Sensor_Value() 
-{
-  Serial.print(V_STL);
-  Serial.print(V_S1);
-  Serial.print(V_S2);  
-  Serial.print(V_S3);
-  Serial.print(V_S4);
-  Serial.print(V_S5);
-  Serial.print(V_STR);
-  Serial.print("    But1: ");
-  Serial.print(V_But1);
-  Serial.print(" But2: ");
-  Serial.print(V_But2);
-  Serial.print(" CurrentMode: ");
-  Serial.println(currentMode);
-//  delay(50);
+  if (V_But2 < 100){
+    PORTC |= (1 << PC3);
+    delay(50);
+    PORTC &= ~(1 << PC3);
+    delay(50);
+    RunAndSpeedMode = 2;
+  }
 }
+//void Print_Sensor_Value() 
+//{
+//  Serial.print(V_STL);
+//  Serial.print(V_S1);
+//  Serial.print(V_S2);  
+//  Serial.print(V_S3);
+//  Serial.print(V_S4);
+//  Serial.print(V_S5);
+//  Serial.print(V_STR);
+//  Serial.print("    But1: ");
+//  Serial.print(V_But1);
+//  Serial.print(" But2: ");
+//  Serial.print(V_But2);
+//  Serial.print(" But3: ");
+//  Serial.print(V_But3);
+//  Serial.print(" CurrentMode: ");
+//  Serial.print(currentMode);
+//  Serial.print(" RunAndSpeedMode: ");
+//  Serial.print(RunAndSpeedMode);
+//  Serial.print(" SpeedMax: ");
+//  Serial.println(SpeedMax);
+//}

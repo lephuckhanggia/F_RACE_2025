@@ -38,11 +38,11 @@ void Print_Sensor_Value()
 //  Serial.print(V_S4);
 //  Serial.print(V_S5);
 //  Serial.print(V_STR);
-  Serial.print("    But1: ");
-  Serial.print(V_But1);
-  Serial.print(" But2: ");
-  Serial.print(V_But2);
-  Serial.print(" CurrentMode: ");
-  Serial.println(currentMode);
+//  Serial.print("    But1: ");
+//  Serial.print(V_But1);
+//  Serial.print(" But2: ");
+//  Serial.print(V_But2);
+//  Serial.print(" CurrentMode: ");
+//  Serial.println(currentMode);
 //  delay(50);
 }
